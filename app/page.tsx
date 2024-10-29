@@ -7,7 +7,7 @@ export default async function Home() {
     "use server";
     const supabase = await createClient();
     await supabase.auth.resetPasswordForEmail("clactar+1@gmail.com", {
-      redirectTo: "http://localhost:3000/page1",
+      redirectTo: process.env.NEXT_PUBLIC_URL + "/page1",
     });
   };
 
