@@ -9,12 +9,8 @@ export async function GET(request: NextRequest) {
   const token_hash = searchParams.get("token_hash");
   const type = searchParams.get("type") as EmailOtpType | null;
   const next = searchParams.get("next") ?? "/";
-
-  // Get the base URL from the request
-  const baseURL = process.env.NEXT_PUBLIC_SITE_URL || request.nextUrl.origin;
-
-  // Create the full redirect URL
-  const redirectTo = new URL(next, baseURL);
+  const redirectTo = request.nextUrl.clone();
+  redirectTo.pathname = next;
 
   if (token_hash && type) {
     const supabase = await createClient();
@@ -28,7 +24,7 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // For error page, also use the full URL
-  const errorRedirectTo = new URL("/auth/auth-code-error", baseURL);
-  return NextResponse.redirect(errorRedirectTo);
+  // return the user to an error page with some instructions
+  redirectTo.pathname = "/auth/auth-code-error";
+  return NextResponse.redirect(redirectTo);
 }
