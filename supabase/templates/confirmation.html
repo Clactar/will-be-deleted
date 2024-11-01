@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Confirm your email</h1>
+    <p>Click the link below to confirm your email:</p>
+    <a
+      href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=signup&next=/page2"
+      >Confirm Email</a
+    >
+  </body>
+</html>
